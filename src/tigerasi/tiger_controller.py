@@ -4,7 +4,7 @@ from serial import Serial, SerialException
 from functools import cache, wraps
 from time import sleep, perf_counter
 from tigerasi.device_codes import *
-from typing import Union
+from typing import Union, Dict
 import logging
 
 # Constants
@@ -1077,16 +1077,16 @@ class TigerController:
         reply = self._set_cmd_args_and_kwds(Cmds.TTL, wait=wait)
         return bool(int(reply.lstrip(':A ')))
 
-    def is_moving(self):
+    def is_moving(self) -> bool:
         """True if any axes is moving. False otherwise. Blocks."""
-        return self.are_axes_moving()
+        return any(self.are_axes_moving().values())
 
-    def is_axis_moving(self, axis: str):
+    def is_axis_moving(self, axis: str) -> bool:
         """True if the specified axis is moving. False otherwise. Blocks."""
         return next(iter(self.are_axes_moving(axis).items()))[-1] # True or False
 
     @axis_check()
-    def are_axes_moving(self, *axes: str):
+    def are_axes_moving(self, *axes: str) -> Dict[str,bool]:
         """Return a dict of booleans, keyed by axis, indicating whether the
         specified axes are (True) or are not (False) moving. Defaults to all
         lettered axes if none are specified. Blocks. Implements
