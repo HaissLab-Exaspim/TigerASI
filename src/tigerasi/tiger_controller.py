@@ -897,14 +897,16 @@ class TigerController:
         self._set_cmd_args_and_kwds(Cmds.ARRAY, card_address=card_address,
                                     wait=wait)
 
-    def reset_ring_buffer(self, wait: bool = True):
+    def reset_ring_buffer(self, wait: bool = True, axis = "Z"):
         """Clear the ring buffer contents."""
-        self._clear_ring_buffer(wait=wait)
+        self._clear_ring_buffer(wait=wait, axis=axis)
         self._rb_axes = []
 
-    def _clear_ring_buffer(self, wait: bool = True):
+    def _clear_ring_buffer(self, wait: bool = True, axis = "Z"):
         """Clear the ring buffer contents."""
-        kwds = {'X': 0}
+        offset = self.ordered_axes.index(axis)
+        axis_byte = 0 | (1 << offset)
+        kwds = {'X': 0, 'Y':axis_byte} # X-0 = Clears the ring buffer (RING_BUFFER firmware required) 
         self._set_cmd_args_and_kwds(Cmds.RBMODE, **kwds, wait=wait)
 
     @axis_check('mode', 'wait')

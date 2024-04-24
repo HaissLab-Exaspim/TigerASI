@@ -136,9 +136,9 @@ class CCAZ(Enum):
 
 
 class RingBufferMode(Enum):
-    TTL = 0
-    ONE_SHOT = 1
-    REPEATING = 2
+    TTL = 1
+    ONE_SHOT = 2
+    REPEATING = 3
 
 
 class TTLIn0Mode(Enum):
