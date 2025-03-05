@@ -37,6 +37,7 @@ class Cmds(Enum):
     Z2B = "Z2B"  # Z2B Y? |or| Z2B Y=1 to set the axis id.
     INFO = "INFO" # INFO [axis]
     ACCEL = "AC"
+    RESET = "RESET"
 
 
 class ErrorCodes(Enum):
