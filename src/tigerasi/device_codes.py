@@ -38,6 +38,9 @@ class Cmds(Enum):
     INFO = "INFO" # INFO [axis]
     ACCEL = "AC"
     RESET = "RESET"
+    AA = "AA"
+    PC = "PC"
+    AC = "AC"
 
 
 class ErrorCodes(Enum):
